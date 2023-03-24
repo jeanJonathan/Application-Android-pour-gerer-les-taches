@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -111,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void supprimerTache(){
+        for(int i=0;i<=listeDesChekB.size()-1;i++) {
+            if(listeDesChekB.get(i).isChecked()){
+                //Sppression de la tache
+                uneTacheDAO.delTache(laListeTaches.get(i));
 
+            }
+        }
+        //recharge lstTache
+        laListeTaches = uneTacheDAO.getTaches();
+        afficherTaches();
     }
 }
