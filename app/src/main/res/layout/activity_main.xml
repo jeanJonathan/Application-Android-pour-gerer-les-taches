@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tListeTaches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Liste des taches"
+        android:textSize="18sp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/lListeTaches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/eNouvelleTache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Nouvelle tache"
+
+            />
+
+        <Spinner
+            android:id="@+id/spinTaches"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:spinnerMode="dialog"
+            android:entries="@array/listeSpintTache"/>
+
+        <Button
+            android:id="@+id/bAjouter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="+" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bTacheFaite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TACHE FAITE "
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"/>
+
+    <Button
+        android:id="@+id/bNouvelleCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NOUVELLE CATEGORIE"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"/>
+
+    <Button
+        android:id="@+id/bSuprimerTache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SUPPRIMER CATEGORIE"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"/>
+
+</LinearLayout>

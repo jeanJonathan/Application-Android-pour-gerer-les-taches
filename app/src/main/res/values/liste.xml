@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listeSpintTache">
+        <item>Maison</item>
+        <item>Travail</item>
+        <item>Loisirs</item>
+        <item>Culture</item>
+        <item>Travaux</item>
+        <item>Famille</item>
+    </string-array>
+</resources>
