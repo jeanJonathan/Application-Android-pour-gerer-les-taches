@@ -78,7 +78,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Developpement de la fonctionnalite pour valider la tache
+        validerTache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Code a executer
+                supprimerTache();
 
+            }
+        });
     }
     //Implementation de la methode afficherTaches
     private void afficherTaches(){
@@ -102,5 +109,8 @@ public class MainActivity extends AppCompatActivity {
             unLayout.addView(unTextView);
             listeTaches.addView(unLayout);
         }
+    }
+    private void supprimerTache(){
+
     }
 }
