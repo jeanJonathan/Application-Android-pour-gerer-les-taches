@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinTaches;
     private Button ajouterTache;
     private Button validerTache;
+
+    //On travaillera pas sur ses fonctionnalite
     private Button nouvelleCategorie;
     private Button supprimerTache;
 
@@ -56,24 +58,31 @@ public class MainActivity extends AppCompatActivity {
         uneTacheDAO = new TacheDAO(this);
         uneCategorieDAO= new CategorieDAO(this);
         listeDesChekB = new ArrayList<CheckBox>(); // On initialise lstChk pour creer une liste d'objet de type checkBox
-        listeCategorie = uneCategorieDAO.getCategories();
+
+        listeCategorie = uneCategorieDAO.getCategories(); // Liste des taches est initialisee avec un tableau de Categorie
 
         ajouterTache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Code a executer lors du click
+                //Creation de la tache
                 long idCategorie;
                 String libelleTache;
                 //getIdC() pour reccuperer l'id qui correspond a celui stocker dans la bd
                 //getSelectedItemPosition() pour reccuperer la position du spinner selectionner
+                //listeCategorie.get(spinTaches.getSelectedItemPosition()) retourne une categorie de type Categorie
                 idCategorie = listeCategorie.get(spinTaches.getSelectedItemPosition()).getIdC();
                 libelleTache = saisieTache.getText().toString();
+                //Creation de la tache ok
                 Tache uneTache = new Tache(libelleTache,idCategorie);
+
+                //Ajout de la tache a la liste des taches, uneTacheDAO joue le role d'un objet du Controleur TacheDAO
                 uneTacheDAO.addTache(uneTache);
                 laListeTaches = uneTacheDAO.getTaches();
-                //Appel de la methode pour afficher la liste des taches
+
+                //Appel de la methode pour afficher proprement le contenue de liste des taches dans le LinearLayout
                 afficherTaches();
-                //Remise a zero
+
+                //On supprime la tache saisie (remise a zero)
                 saisieTache.setText("");
             }
         });
@@ -114,9 +123,8 @@ public class MainActivity extends AppCompatActivity {
     private void supprimerTache(){
         for(int i=0;i<=listeDesChekB.size()-1;i++) {
             if(listeDesChekB.get(i).isChecked()){
-                //Sppression de la tache
+                //Sppression de l'element cocher
                 uneTacheDAO.delTache(laListeTaches.get(i));
-
             }
         }
         //recharge lstTache
