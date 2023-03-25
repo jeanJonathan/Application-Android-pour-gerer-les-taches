@@ -2,11 +2,13 @@ package com.example.totolistreprise;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     //Declaration des objets graphique
     private LinearLayout listeTaches ;
     private EditText saisieTache;
-    private Spinner spinTaches;
+    private Spinner spinCategorie;
     private Button ajouterTache;
     private Button validerTache;
 
@@ -47,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
         //Liaison des objets graphique au objet java, c'est le seul endroid ou j'utilise les id apres ca on manipule avec les objets graphiques
         listeTaches = findViewById(R.id.lListeTaches);
         saisieTache = findViewById(R.id.eNouvelleTache);
-        spinTaches = findViewById(R.id.spinTaches);
         ajouterTache = findViewById(R.id.bAjouter);
         validerTache = findViewById(R.id.bTacheFaite);
         nouvelleCategorie = findViewById(R.id.bNouvelleCategorie);
         supprimerTache = findViewById(R.id.bSuprimerTache);
+        spinCategorie = findViewById(R.id.spinTaches);
 
         //Pour reccuperer les categorie de la liste des categorie
         //Important d'initialiser les objets
         uneTacheDAO = new TacheDAO(this);
         uneCategorieDAO= new CategorieDAO(this);
         listeDesChekB = new ArrayList<CheckBox>(); // On initialise lstChk pour creer une liste d'objet de type checkBox
-
+        // Récupérer la liste des catégories depuis la base de données
         listeCategorie = uneCategorieDAO.getCategories(); // Liste des taches est initialisee avec un tableau de Categorie
 
         ajouterTache.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 //getIdC() pour reccuperer l'id qui correspond a celui stocker dans la bd
                 //getSelectedItemPosition() pour reccuperer la position du spinner selectionner
                 //listeCategorie.get(spinTaches.getSelectedItemPosition()) retourne une categorie de type Categorie
-                idCategorie = listeCategorie.get(spinTaches.getSelectedItemPosition()).getIdC();
+                idCategorie = listeCategorie.get(spinCategorie.getSelectedItemPosition()).getIdC();
                 libelleTache = saisieTache.getText().toString();
                 //Creation de la tache ok
                 Tache uneTache = new Tache(libelleTache,idCategorie);
@@ -96,7 +98,40 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //
+        nouvelleCategorie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent unIntent = new Intent(getApplicationContext(),NouvelleCategorie.class);
+                startActivity(unIntent);
+            }
+        });
+        // Ajouter la nouvelle catégorie si elle a été créée depuis NouvelleCategorie
+        long nouvelleCategorieId = getIntent().getLongExtra("nouvelle_categorie_id", -1);
+        if (nouvelleCategorieId != -1) {
+            Categorie nouvelleCategorie = uneCategorieDAO.getCategorie(nouvelleCategorieId);
+            if (nouvelleCategorie != null) {
+                listeCategorie.add(nouvelleCategorie);
+            }
+        }
+        //On boucle a nouveau pour reccuperer les noms des categories
+        ArrayList<String> listeNomsCategorie = new ArrayList<String>();
+        for (Categorie categorie : listeCategorie) {
+            listeNomsCategorie.add(categorie.getNomC());
+        }
+
+        //Log.d("test",listeCategorie.toString());
+        // Instancier un ArrayAdapter pour le Spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listeNomsCategorie);
+        //ArrayAdapter<Categorie> adapter = new ArrayAdapter<Categorie>(this, android.R.layout.simple_spinner_item,listeNomsCategorie);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Ajouter l'Adapter au Spinner
+        spinCategorie.setAdapter(adapter);
+
     }
+
     //Implementation de la methode afficherTaches
     private void afficherTaches(){
         listeTaches.removeAllViews();

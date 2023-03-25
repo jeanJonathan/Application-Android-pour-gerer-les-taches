@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:spinnerMode="dialog"
-            android:entries="@array/listeSpintTache"/>
+            />
 
         <Button
             android:id="@+id/bAjouter"

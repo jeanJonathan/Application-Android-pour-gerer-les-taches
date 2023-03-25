@@ -21,10 +21,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Saisie nouvelle categorie" />
+        android:hint="Saisie categorie" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bAjouterNouvelleCategorie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="AJOUTER" />

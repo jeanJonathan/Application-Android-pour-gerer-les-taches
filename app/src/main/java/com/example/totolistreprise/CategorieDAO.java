@@ -1,6 +1,7 @@
 package com.example.totolistreprise;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -48,5 +49,13 @@ public class CategorieDAO {
         }
         return listeCategorie;
     }
+
+    //Methode pour ajouter une nouvelle Categorie dans la base de donnee
+    public long ajouterCategorie(Categorie categorie) {
+        ContentValues values = new ContentValues();
+        values.put("nomC", categorie.getNomC());
+        return accesBD.getWritableDatabase().insert("categorie", null, values);
+    }
+
 }
 
